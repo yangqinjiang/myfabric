@@ -2,6 +2,8 @@
 channelArtifactsDir=../channel-artifacts
 channelName=qbgoochannel
 FABRIC_CFG_PATH=$(pwd)/../
+echo "FABRIC_CFG_PATH=".$(FABRIC_CFG_PATH)
+
 
 # 1. 在项目根目录下创建新目录 $channelArtifactsDir, 
 # 将生成的创始块和通道文件存储在该目录中
