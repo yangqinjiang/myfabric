@@ -41,6 +41,7 @@ generateCerts(){
         exit 1
     fi
     echo
+    tree $cryptoConfigDir/ -L 3
 }
 
 #生成的创始块和通道文件
