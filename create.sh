@@ -190,7 +190,7 @@ printHelp() {
 }
 MODE=$1
 echo "参数1:${MODE}"
-shift
+# shift
 #Create the network using docker compose
 if [ "${MODE}" == "up" ]; then
   networkUp
