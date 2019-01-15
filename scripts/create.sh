@@ -8,7 +8,11 @@ echo FABRIC_CFG_PATH
 
 # 1. 在项目根目录下创建新目录 $channelArtifactsDir, 
 # 将生成的创始块和通道文件存储在该目录中
-mkdir $channelArtifactsDir
+if [! -d $channelArtifactsDir ]; then
+        mkdir $channelArtifactsDir
+fi
+
+
 # 生成创始块文件
 configtxgen  -profile OrgsOrdererGenesis -outputBlock ./$channelArtifactsDir/genesis.block
 
