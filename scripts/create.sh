@@ -1,5 +1,5 @@
 #将生成的创始块和通道文件存储在该目录中
-channelArtifactsDir=channel-artifacts
+channelArtifactsDir=../channel-artifacts
 channelName=qbgoochannel
 
 # 1. 在项目根目录下创建新目录 $channelArtifactsDir, 
