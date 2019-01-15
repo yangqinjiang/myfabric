@@ -12,6 +12,19 @@ echo
 
 CHANNEL_NAME="$1"
 : ${CHANNEL_NAME:="mychannel"}
+# timeout duration - the duration the CLI should wait for a response from
+# another container before giving up
+CLI_TIMEOUT=10
+# default for delay between commands
+CLI_DELAY=3
+# use this as the default docker-compose yaml definition
+COMPOSE_FILE=docker-compose.yaml
+#
+# use golang as the default language for chaincode
+LANGUAGE=golang
+VERBOSE=false
+# default image tag
+IMAGETAG="latest"
 
 echo "===================== '通道名称: $CHANNEL_NAME' ===================== "
 # Generates Org certs using cryptogen tool
@@ -115,8 +128,93 @@ generateChannelArtifacts() {
     tree $channelArtifactsDir/
 }
 
-generateCerts
-generateChannelArtifacts
+networkUp(){
+    echo "##########################################################"
+    echo "################  docker-compose启动相关容器 ##############"
+    echo "##########################################################"
+    if [ -d $COMPOSE_FILE ]; then
+        echo "不存在 ${COMPOSE_FILE} 文件,启动不了容器"
+        exit 1
+    fi
+    set -x
+    docker-compose -f $COMPOSE_FILE up -d 2>&1
+    res=$?
+    set +x
+    if [ $res -ne 0 ]; then
+        echo "ERROR !!!! Unable to start network,docker-compose ERROR"
+        exit 1
+    fi
+    # 运行cli容器内的脚本
+    # now run the end to end script
+    docker exec cli scripts/script.sh $CHANNEL_NAME $CLI_DELAY $LANGUAGE $CLI_TIMEOUT $VERBOSE
+    if [ $? -ne 0 ]; then
+      echo "ERROR !!!! Test failed"
+      exit 1
+    fi
+}
+
+# Print the usage message
+function printHelp() {
+  echo "Usage: "
+  echo "  byfn.sh <mode> [-c <channel name>] [-t <timeout>] [-d <delay>] [-f <docker-compose-file>] [-s <dbtype>] [-l <language>] [-i <imagetag>] [-v]"
+  echo "    <mode> - one of 'up', 'down', 'restart', 'generate' or 'upgrade'"
+  echo "      - 'up' - bring up the network with docker-compose up"
+  echo "      - 'down' - clear the network with docker-compose down"
+  echo "      - 'restart' - restart the network"
+  echo "      - 'generate' - generate required certificates and genesis block"
+  echo "      - 'upgrade'  - upgrade the network from version 1.1.x to 1.2.x"
+  echo "    -c <channel name> - channel name to use (defaults to \"mychannel\")"
+  echo "    -t <timeout> - CLI timeout duration in seconds (defaults to 10)"
+  echo "    -d <delay> - delay duration in seconds (defaults to 3)"
+  echo "    -f <docker-compose-file> - specify which docker-compose file use (defaults to docker-compose-cli.yaml)"
+  echo "    -s <dbtype> - the database backend to use: goleveldb (default) or couchdb"
+  echo "    -l <language> - the chaincode language: golang (default) or node"
+  echo "    -i <imagetag> - the tag to be used to launch the network (defaults to \"latest\")"
+  echo "    -v - verbose mode"
+  echo "  byfn.sh -h (print this message)"
+  echo
+  echo "Typically, one would first generate the required certificates and "
+  echo "genesis block, then bring up the network. e.g.:"
+  echo
+  echo "	byfn.sh generate -c mychannel"
+  echo "	byfn.sh up -c mychannel -s couchdb"
+  echo "        byfn.sh up -c mychannel -s couchdb -i 1.2.x"
+  echo "	byfn.sh up -l node"
+  echo "	byfn.sh down -c mychannel"
+  echo "        byfn.sh upgrade -c mychannel"
+  echo
+  echo "Taking all defaults:"
+  echo "	byfn.sh generate"
+  echo "	byfn.sh up"
+  echo "	byfn.sh down"
+}
+MODE=$1
+echo "参数1${MODE}"
+#Create the network using docker compose
+if [ "${MODE}" == "up" ]; then
+  networkUp
+elif [ "${MODE}" == "down" ]; then ## Clear the network
+  #networkDown
+  printHelp
+  exit 1
+elif [ "${MODE}" == "generate" ]; then ## Generate Artifacts
+  generateCerts
+  #replacePrivateKey
+  generateChannelArtifacts
+elif [ "${MODE}" == "restart" ]; then ## Restart the network
+  #networkDown
+  #networkUp
+  printHelp
+  exit 1
+elif [ "${MODE}" == "upgrade" ]; then ## Upgrade the network from version 1.1.x to 1.2.x
+  #upgradeNetwork
+  printHelp
+  exit 1
+else
+  printHelp
+  exit 1
+fi
+
 
 
 echo
