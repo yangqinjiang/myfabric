@@ -9,6 +9,12 @@ echo "|____/    |_|   /_/   \_\ |_| \_\   |_|  "
 echo
 echo "Build your first network (BYFN) end-to-end test"
 echo
+
+channelName="$1"
+: ${CHANNEL_NAME:="mychannel"}
+echo "===================== '通道名称: $channelName' ===================== "
+
+
 echo "===================== 生成证书 ===================== "
 # 根据默认模板在对应目录下生成证书
 cryptogen generate
@@ -18,7 +24,7 @@ cryptogen generate --config=crypto-config.yaml --output crypto-config
 echo "===================== 生成的创始块和通道文件 ===================== "
 #将生成的创始块和通道文件存储在该目录中
 channelArtifactsDir=channel-artifacts
-channelName=qbgoochannel
+
 
 
 
