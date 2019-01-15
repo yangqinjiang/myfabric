@@ -35,7 +35,7 @@ channelArtifactsDir=channel-artifacts
 
 echo "===================== 创始块文件 ===================== "
 # 生成创始块文件
-configtxgen   -profile OrgsOrdererGenesis -outputBlock $channelArtifactsDir/genesis.block
+configtxgen   -profile OrgsOrdererGenesis -outputBlock $channelArtifactsDir/${channelName}_genesis.block
 
 
 echo "===================== 创建channel.tx文件 ===================== "
