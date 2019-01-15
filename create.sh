@@ -10,8 +10,7 @@ echo
 echo "Build your first network (BYFN) end-to-end test"
 echo
 
-CHANNEL_NAME="$1"
-: ${CHANNEL_NAME:="mychannel"}
+CHANNEL_NAME="qbgoochannel"
 # timeout duration - the duration the CLI should wait for a response from
 # another container before giving up
 CLI_TIMEOUT=10
