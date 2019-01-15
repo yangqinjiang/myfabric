@@ -14,31 +14,36 @@ CHANNEL_NAME="$1"
 : ${CHANNEL_NAME:="mychannel"}
 
 echo "===================== '通道名称: $CHANNEL_NAME' ===================== "
+# 生成证书
+# Generates Org certs using cryptogen tool
+function generateCerts() {
+    echo "##########################################################"
+    echo "####################### 使用cryptogen生成证书 ##########################"
+    echo "##########################################################"
+    which cryptogen
+    if [ "$?" -ne 0 ]; then
+        echo "cryptogen tool not found. exiting"
+        exit 1
+    fi
+    cryptoConfigDir=crypto-config
 
-
-which cryptogen
-  if [ "$?" -ne 0 ]; then
-    echo "cryptogen tool not found. exiting"
+    if [ -d $cryptoConfigDir ]; then
+        echo "强制删除${cryptoConfigDir}目录"
+        rm -Rf $cryptoConfigDir
+    fi
+    set -x
+    # 根据指定的模板在指定目录下生成证书
+    cryptogen generate --config=crypto-config.yaml --output $cryptoConfigDir
+    res=$?
+    set +x
+    if [ $res -ne 0 ]; then
+    echo "Failed to generate certificates..."
     exit 1
-  fi
-cryptoConfigDir=crypto-config
-echo "##########################################################"
-echo "####################### 生成证书 ##########################"
-echo "##########################################################"
-if [ -d $cryptoConfigDir ]; then
-    echo "强制删除${cryptoConfigDir}目录"
-     rm -Rf $cryptoConfigDir
-fi
-  set -x
- # 根据指定的模板在指定目录下生成证书
-cryptogen generate --config=crypto-config.yaml --output $cryptoConfigDir
-res=$?
-set +x
-if [ $res -ne 0 ]; then
-  echo "Failed to generate certificates..."
-  exit 1
-fi
-echo
+    fi
+    echo
+}
+
+generateCerts()
 
 echo "===================== 生成的创始块和通道文件 ===================== "
 #将生成的创始块和通道文件存储在该目录中
