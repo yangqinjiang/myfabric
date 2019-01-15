@@ -14,9 +14,8 @@ CHANNEL_NAME="$1"
 : ${CHANNEL_NAME:="mychannel"}
 
 echo "===================== '通道名称: $CHANNEL_NAME' ===================== "
-# 生成证书
-# Generates Org certs using cryptogen tool
-function generateCerts() {
+
+function generateCerts(){
     echo "##########################################################"
     echo "################### 使用cryptogen生成证书 #################"
     echo "##########################################################"
