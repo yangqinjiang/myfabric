@@ -18,7 +18,7 @@ echo "===================== '通道名称: $CHANNEL_NAME' ===================== 
 # Generates Org certs using cryptogen tool
 function generateCerts() {
     echo "##########################################################"
-    echo "####################### 使用cryptogen生成证书 ##########################"
+    echo "################### 使用cryptogen生成证书 #################"
     echo "##########################################################"
     which cryptogen
     if [ "$?" -ne 0 ]; then
@@ -37,8 +37,8 @@ function generateCerts() {
     res=$?
     set +x
     if [ $res -ne 0 ]; then
-    echo "Failed to generate certificates..."
-    exit 1
+        echo "Failed to generate certificates..."
+        exit 1
     fi
     echo
 }
