@@ -191,7 +191,7 @@ MODE=$1
 echo "参数1:${MODE}"
 # shift
 #Create the network using docker compose
-if [ "${MODE}" == "up" ]; then
+if [ "$MODE" == "up" ]; then
   networkUp
 # elif [ $MODE == "down" ]; then ## Clear the network
 #   #networkDown
