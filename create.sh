@@ -192,22 +192,22 @@ MODE=$1
 shift
 echo "参数1:${MODE}"
 #Create the network using docker compose
-if [ "${MODE}" == "up" ]; then
+if [ "$MODE" == "up" ]; then
   networkUp
-elif [ "${MODE}" == "down" ]; then ## Clear the network
+elif [ "$MODE" == "down" ]; then ## Clear the network
   #networkDown
   printHelp
   exit 1
-elif [ "${MODE}" == "generate" ]; then ## Generate Artifacts
+elif [ "$MODE" == "generate" ]; then ## Generate Artifacts
   generateCerts
   #replacePrivateKey
   generateChannelArtifacts
-elif [ "${MODE}" == "restart" ]; then ## Restart the network
+elif [ "$MODE" == "restart" ]; then ## Restart the network
   #networkDown
   #networkUp
   printHelp
   exit 1
-elif [ "${MODE}" == "upgrade" ]; then ## Upgrade the network from version 1.1.x to 1.2.x
+elif [ "$MODE" == "upgrade" ]; then ## Upgrade the network from version 1.1.x to 1.2.x
   #upgradeNetwork
   printHelp
   exit 1
