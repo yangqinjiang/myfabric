@@ -17,15 +17,15 @@ echo "===================== '通道名称: $channelName' ===================== "
 
 
 echo "===================== 生成证书 ===================== "
+cryptoConfigDir=crypto-config
 # 根据默认模板在对应目录下生成证书
 cryptogen generate
 # 根据指定的模板在指定目录下生成证书
-cryptogen generate --config=crypto-config.yaml --output crypto-config
+cryptogen generate --config=crypto-config.yaml --output $cryptoConfigDir
 
 echo "===================== 生成的创始块和通道文件 ===================== "
 #将生成的创始块和通道文件存储在该目录中
 channelArtifactsDir=channel-artifacts
-
 
 
 
