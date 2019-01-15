@@ -11,7 +11,8 @@ echo "Build your first network (BYFN) end-to-end test"
 echo
 
 channelName="$1"
-: ${CHANNEL_NAME:="mychannel"}
+: ${channelName:="mychannel"}
+
 echo "===================== '通道名称: $channelName' ===================== "
 
 
@@ -40,7 +41,7 @@ configtxgen   -profile OrgsOrdererGenesis -outputBlock $channelArtifactsDir/gene
 echo "===================== 创建channel.tx文件 ===================== "
 # 创建channel
 # channel.tx中包含了用于生产channel的信息
-configtxgen  -profile OrgsChannel -outputCreateChannelTx ./$channelArtifactsDir/($channelName)_channel.tx -channelID $channelName
+configtxgen  -profile OrgsChannel -outputCreateChannelTx ./$channelArtifactsDir/${channelName}_channel.tx -channelID $channelName
 
 echo "===================== 生成相关的锚点文件 - 组织A ===================== "
 # 生成相关的锚点文件 - 组织A
