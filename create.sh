@@ -40,7 +40,7 @@ configtxgen   -profile OrgsOrdererGenesis -outputBlock $channelArtifactsDir/gene
 echo "===================== 创建channel.tx文件 ===================== "
 # 创建channel
 # channel.tx中包含了用于生产channel的信息
-configtxgen  -profile OrgsChannel -outputCreateChannelTx ./$channelArtifactsDir/{$channelName_channel}.tx -channelID $channelName
+configtxgen  -profile OrgsChannel -outputCreateChannelTx ./$channelArtifactsDir/{$channelName}_channel.tx -channelID $channelName
 
 echo "===================== 生成相关的锚点文件 - 组织A ===================== "
 # 生成相关的锚点文件 - 组织A
