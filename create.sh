@@ -16,7 +16,6 @@ CHANNEL_NAME="$1"
 echo "===================== '通道名称: $CHANNEL_NAME' ===================== "
 
 
-echo "===================== 生成证书 ===================== "
 which cryptogen
   if [ "$?" -ne 0 ]; then
     echo "cryptogen tool not found. exiting"
@@ -24,6 +23,9 @@ which cryptogen
   fi
 cryptoConfigDir=crypto-config
   if [ ! -d $cryptoConfigDir ]; then
+   echo "##########################################################"
+   echo "####################### 生成证书 ##########################"
+   echo "##########################################################"
     # 根据指定的模板在指定目录下生成证书
     cryptogen generate --config=crypto-config.yaml --output $cryptoConfigDir
   else
