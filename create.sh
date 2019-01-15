@@ -22,15 +22,15 @@ which cryptogen
     exit 1
   fi
 cryptoConfigDir=crypto-config
-  if [ ! -d $cryptoConfigDir ]; then
-   echo "##########################################################"
-   echo "####################### 生成证书 ##########################"
-   echo "##########################################################"
-    # 根据指定的模板在指定目录下生成证书
-    cryptogen generate --config=crypto-config.yaml --output $cryptoConfigDir
-  else
-    echo "已存在${cryptoConfigDir}目录"
-  fi
+echo "##########################################################"
+echo "####################### 生成证书 ##########################"
+echo "##########################################################"
+if [ -d $cryptoConfigDir ]; then
+    echo "强制删除${cryptoConfigDir}目录"
+     rm -Rf $cryptoConfigDir
+fi
+ # 根据指定的模板在指定目录下生成证书
+cryptogen generate --config=crypto-config.yaml --output $cryptoConfigDir
 
 
 echo "===================== 生成的创始块和通道文件 ===================== "
