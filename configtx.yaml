@@ -179,7 +179,7 @@ Orderer: &OrdererDefaults
 ################################################################################
 Profiles:
 
-    QbgooOrgsOrdererGenesis:
+    OrgsOrdererGenesis:
         Capabilities:
             <<: *ChannelCapabilities
         Orderer:
@@ -193,7 +193,7 @@ Profiles:
                 Organizations:
                     - *OrgA
                     - *OrgB
-    QbgooOrgsChannel:
+    OrgsChannel:
         Consortium: SampleConsortium
         Application:
             <<: *ApplicationDefaults
