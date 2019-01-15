@@ -14,8 +14,8 @@ CHANNEL_NAME="$1"
 : ${CHANNEL_NAME:="mychannel"}
 
 echo "===================== '通道名称: $CHANNEL_NAME' ===================== "
-
-function generateCerts(){
+# Generates Org certs using cryptogen tool
+generateCerts(){
     echo "##########################################################"
     echo "################### 使用cryptogen生成证书 #################"
     echo "##########################################################"
@@ -42,7 +42,7 @@ function generateCerts(){
     echo
 }
 
-  generateCerts
+generateCerts
 
 echo "===================== 生成的创始块和通道文件 ===================== "
 #将生成的创始块和通道文件存储在该目录中
