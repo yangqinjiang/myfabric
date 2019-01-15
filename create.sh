@@ -10,10 +10,10 @@ echo
 echo "Build your first network (BYFN) end-to-end test"
 echo
 
-channelName="$1"
-: ${channelName:="mychannel"}
+CHANNEL_NAME="$1"
+: ${CHANNEL_NAME:="mychannel"}
 
-echo "===================== '通道名称: $channelName' ===================== "
+echo "===================== '通道名称: $CHANNEL_NAME' ===================== "
 
 
 echo "===================== 生成证书 ===================== "
@@ -35,20 +35,20 @@ channelArtifactsDir=channel-artifacts
 
 echo "===================== 创始块文件 ===================== "
 # 生成创始块文件
-configtxgen   -profile OrgsOrdererGenesis -outputBlock $channelArtifactsDir/${channelName}_genesis.block
+configtxgen   -profile OrgsOrdererGenesis -outputBlock $channelArtifactsDir/${CHANNEL_NAME}_genesis.block
 
 
 echo "===================== 创建channel.tx文件 ===================== "
 # 创建channel
 # channel.tx中包含了用于生产channel的信息
-configtxgen  -profile OrgsChannel -outputCreateChannelTx ./$channelArtifactsDir/${channelName}_channel.tx -channelID $channelName
+configtxgen  -profile OrgsChannel -outputCreateChannelTx ./$channelArtifactsDir/${CHANNEL_NAME}_channel.tx -channelID $CHANNEL_NAME
 
 echo "===================== 生成相关的锚点文件 - 组织A ===================== "
 # 生成相关的锚点文件 - 组织A
-configtxgen  -profile OrgsChannel -outputAnchorPeersUpdate ./$channelArtifactsDir/OrgAMSPanchors.tx -channelID $channelName -asOrg OrgAMSP
+configtxgen  -profile OrgsChannel -outputAnchorPeersUpdate ./$channelArtifactsDir/OrgAMSPanchors.tx -channelID $CHANNEL_NAME -asOrg OrgAMSP
 echo "===================== 生成相关的锚点文件 - 组织B ===================== "
 # 生成相关的锚点文件 - 组织B
-configtxgen  -profile OrgsChannel -outputAnchorPeersUpdate ./$channelArtifactsDir/OrgBMSPanchors.tx -channelID $channelName -asOrg OrgBMSP
+configtxgen  -profile OrgsChannel -outputAnchorPeersUpdate ./$channelArtifactsDir/OrgBMSPanchors.tx -channelID $CHANNEL_NAME -asOrg OrgBMSP
 #查看$channelArtifactsDir目录下生成的文件
 
 tree $channelArtifactsDir/
@@ -66,10 +66,3 @@ echo "|_____| |_| \_| |____/  "
 echo
 
 exit 0
-
-
-
-#-------------------------------
-# 创建channel
-# peer channel create -o orderer.qbgoo.com:7050 -c $channelName -f ./$channelArtifactsDir/channel.tx  \
-# --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/qbgoo.com/orderers/orderer.qbgoo.com/msp/tlscacerts/tlsca.qbgoo.com-cert.pem
