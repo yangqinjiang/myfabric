@@ -11,9 +11,9 @@ echo "Build your first network (BYFN) end-to-end test"
 echo
 echo "===================== 生成证书 ===================== "
 # 根据默认模板在对应目录下生成证书
-$ cryptogen generate
+cryptogen generate
 # 根据指定的模板在指定目录下生成证书
-$ cryptogen generate --config=../crypto-config.yaml --output ../crypto-config
+cryptogen generate --config=../crypto-config.yaml --output ../crypto-config
 
 echo "===================== 生成的创始块和通道文件 ===================== "
 #将生成的创始块和通道文件存储在该目录中
