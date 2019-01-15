@@ -29,9 +29,16 @@ if [ -d $cryptoConfigDir ]; then
     echo "强制删除${cryptoConfigDir}目录"
      rm -Rf $cryptoConfigDir
 fi
+  set -x
  # 根据指定的模板在指定目录下生成证书
 cryptogen generate --config=crypto-config.yaml --output $cryptoConfigDir
-
+res=$?
+set +x
+if [ $res -ne 0 ]; then
+  echo "Failed to generate certificates..."
+  exit 1
+fi
+echo
 
 echo "===================== 生成的创始块和通道文件 ===================== "
 #将生成的创始块和通道文件存储在该目录中
