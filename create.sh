@@ -126,7 +126,7 @@ generateChannelArtifacts() {
 
     tree $channelArtifactsDir/
 }
-
+#启动
 networkUp(){
     echo "##########################################################"
     echo "################  docker-compose启动相关容器 ##############"
@@ -151,6 +151,33 @@ networkUp(){
       exit 1
     fi
 }
+
+#停止
+# Tear down running network
+networkDown() {
+  
+  docker-compose -f $COMPOSE_FILE down --volumes --remove-orphans
+
+  # Don't remove the generated artifacts -- note, the ledgers are always removed
+  if [ "$MODE" != "restart" ]; then
+    #Cleanup the chaincode containers
+    clearContainers
+  fi
+}
+
+# Obtain CONTAINER_IDS and remove them
+# TODO Might want to make this optional - could clear other containers
+clearContainers() {
+  CONTAINER_IDS=$(docker ps -a | awk '{print $1}')
+  if [ -z "$CONTAINER_IDS" -o "$CONTAINER_IDS" == " " ]; then
+    echo "---- No containers available for deletion ----"
+  else
+    docker rm -f $CONTAINER_IDS
+  fi
+}
+
+
+
 
 # Print the usage message
 printHelp() {
@@ -193,11 +220,9 @@ echo "参数1:${MODE}"
 #Create the network using docker compose
 if [ "$MODE" == "up" ]; then
   networkUp
-# elif [ $MODE == "down" ]; then ## Clear the network
-#   #networkDown
-#   printHelp
-#   exit 1
- elif [ $MODE == "generate" ]; then ## Generate Artifacts
+elif [ $MODE == "down" ]; then ## Clear the network
+   networkDown
+elif [ $MODE == "generate" ]; then ## Generate Artifacts
    generateCerts
    #replacePrivateKey
    generateChannelArtifacts
