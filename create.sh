@@ -189,7 +189,8 @@ printHelp() {
   echo "	byfn.sh down"
 }
 MODE=$1
-echo "参数1${MODE}"
+shift
+echo "参数1:${MODE}"
 #Create the network using docker compose
 if [ "${MODE}" == "up" ]; then
   networkUp
