@@ -43,7 +43,7 @@ function generateCerts() {
     echo
 }
 
-generateCerts()
+generateCerts
 
 echo "===================== 生成的创始块和通道文件 ===================== "
 #将生成的创始块和通道文件存储在该目录中
