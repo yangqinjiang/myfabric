@@ -45,11 +45,21 @@ generateCerts(){
 
 #生成的创始块和通道文件
 generateChannelArtifacts() {
+    echo "##########################################################"
+    echo "################  生成的创始块和通道文件 ###################"
+    echo "##########################################################"
+    which configtxgen
+    if [ "$?" -ne 0 ]; then
+        echo "configtxgen tool not found. exiting"
+        exit 1
+    fi
     
-    echo "===================== 生成的创始块和通道文件 ===================== "
     #将生成的创始块和通道文件存储在该目录中
     channelArtifactsDir=channel-artifacts
-
+    if [ -d $channelArtifactsDir ]; then
+        echo "强制删除${channelArtifactsDir}目录"
+        rm -Rf $channelArtifactsDir
+    fi
 
 
     # 1. 在项目根目录下创建新目录 $channelArtifactsDir, 
@@ -58,21 +68,48 @@ generateChannelArtifacts() {
 
     echo "===================== 创始块文件 ===================== "
     # 生成创始块文件
+    set -x
     configtxgen   -profile OrgsOrdererGenesis -outputBlock $channelArtifactsDir/${CHANNEL_NAME}_genesis.block
-
+    res=$?
+    set +x
+    if [ $res -ne 0 ]; then
+      echo "Failed to generate orderer genesis block..."
+      exit 1
+    fi
 
     echo "===================== 创建channel.tx文件 ===================== "
     # 创建channel
     # channel.tx中包含了用于生产channel的信息
+    set -x
     configtxgen  -profile OrgsChannel -outputCreateChannelTx ./$channelArtifactsDir/${CHANNEL_NAME}_channel.tx -channelID $CHANNEL_NAME
-
+    res=$?
+    set +x
+    if [ $res -ne 0 ]; then
+      echo "Failed to generate channel configuration transaction..."
+      exit 1
+    fi
     echo "===================== 生成相关的锚点文件 - 组织A ===================== "
     # 生成相关的锚点文件 - 组织A
+    set -x
     configtxgen  -profile OrgsChannel -outputAnchorPeersUpdate ./$channelArtifactsDir/OrgAMSPanchors.tx -channelID $CHANNEL_NAME -asOrg OrgAMSP
+    res=$?
+    set +x
+    if [ $res -ne 0 ]; then
+      echo "Failed to generate anchor peer update for OrgAMSP..."
+      exit 1
+    fi
     echo "===================== 生成相关的锚点文件 - 组织B ===================== "
     # 生成相关的锚点文件 - 组织B
+    set -x
     configtxgen  -profile OrgsChannel -outputAnchorPeersUpdate ./$channelArtifactsDir/OrgBMSPanchors.tx -channelID $CHANNEL_NAME -asOrg OrgBMSP
+    res=$?
+    set +x
+    if [ $res -ne 0 ]; then
+      echo "Failed to generate anchor peer update for OrgBMSP..."
+      exit 1
+    fi
     #查看$channelArtifactsDir目录下生成的文件
+    echo "====================查看$channelArtifactsDir目录下生成的文件=============="
 
     tree $channelArtifactsDir/
 }
