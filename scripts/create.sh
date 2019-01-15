@@ -23,7 +23,7 @@ channelName=qbgoochannel
 
 
 # 生成创始块文件
-configtxgen -configPath=../  -profile OrgsOrdererGenesis -outputBlock $channelArtifactsDir/genesis.block
+configtxgen -configPath=../configtx.yaml  -profile OrgsOrdererGenesis -outputBlock $channelArtifactsDir/genesis.block
 
 
 # # 创建channel
