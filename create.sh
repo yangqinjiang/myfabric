@@ -23,7 +23,6 @@ cryptoConfigDir=crypto-config
     cryptogen generate --config=crypto-config.yaml --output $cryptoConfigDir
   else
     echo "已存在${cryptoConfigDir}目录"
-    exit 1
   fi
 
 
