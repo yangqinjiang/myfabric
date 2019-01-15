@@ -31,18 +31,34 @@ echo "===================== 创始块文件 ===================== "
 configtxgen   -profile OrgsOrdererGenesis -outputBlock $channelArtifactsDir/genesis.block
 
 
-# # 创建channel
-# # channel.tx中包含了用于生产channel的信息
-# configtxgen  -profile OrgsChannel -outputCreateChannelTx ./$channelArtifactsDir/channel.tx -channelID $channelName
+echo "===================== 创建channel.tx文件 ===================== "
+# 创建channel
+# channel.tx中包含了用于生产channel的信息
+configtxgen  -profile OrgsChannel -outputCreateChannelTx ./$channelArtifactsDir/channel.tx -channelID $channelName
 
-# # 生成相关的锚点文件 - 组织A
-# configtxgen  -profile OrgsChannel -outputAnchorPeersUpdate ./$channelArtifactsDir/OrgAMSPanchors.tx -channelID $channelName -asOrg OrgAMSP
-# # 生成相关的锚点文件 - 组织B
-# configtxgen  -profile OrgsChannel -outputAnchorPeersUpdate ./$channelArtifactsDir/OrgBMSPanchors.tx -channelID $channelName -asOrg OrgBMSP
-# #查看$channelArtifactsDir目录下生成的文件
-# tree $channelArtifactsDir/
+echo "===================== 生成相关的锚点文件 - 组织A ===================== "
+# 生成相关的锚点文件 - 组织A
+configtxgen  -profile OrgsChannel -outputAnchorPeersUpdate ./$channelArtifactsDir/OrgAMSPanchors.tx -channelID $channelName -asOrg OrgAMSP
+echo "===================== 生成相关的锚点文件 - 组织B ===================== "
+# 生成相关的锚点文件 - 组织B
+configtxgen  -profile OrgsChannel -outputAnchorPeersUpdate ./$channelArtifactsDir/OrgBMSPanchors.tx -channelID $channelName -asOrg OrgBMSP
+#查看$channelArtifactsDir目录下生成的文件
 
+tree $channelArtifactsDir/
 
+echo
+echo "========= All GOOD, BYFN execution completed =========== "
+echo
+
+echo
+echo " _____   _   _   ____   "
+echo "| ____| | \ | | |  _ \  "
+echo "|  _|   |  \| | | | | | "
+echo "| |___  | |\  | | |_| | "
+echo "|_____| |_| \_| |____/  "
+echo
+
+exit 0
 
 
 
