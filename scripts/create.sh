@@ -1,3 +1,16 @@
+#!/bin/bash
+
+echo
+echo " ____    _____      _      ____    _____ "
+echo "/ ___|  |_   _|    / \    |  _ \  |_   _|"
+echo "\___ \    | |     / _ \   | |_) |   | |  "
+echo " ___) |   | |    / ___ \  |  _ <    | |  "
+echo "|____/    |_|   /_/   \_\ |_| \_\   |_|  "
+echo
+echo "Build your first network (BYFN) end-to-end test"
+echo
+
+
 #将生成的创始块和通道文件存储在该目录中
 channelArtifactsDir=../channel-artifacts
 channelName=qbgoochannel
