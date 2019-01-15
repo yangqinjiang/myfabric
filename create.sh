@@ -197,10 +197,10 @@ if [ "$MODE" == "up" ]; then
 #   #networkDown
 #   printHelp
 #   exit 1
-# elif [ $MODE == "generate" ]; then ## Generate Artifacts
-#   generateCerts
-#   #replacePrivateKey
-#   generateChannelArtifacts
+ elif [ $MODE == "generate" ]; then ## Generate Artifacts
+   generateCerts
+   #replacePrivateKey
+   generateChannelArtifacts
 # elif [ $MODE == "restart" ]; then ## Restart the network
 #   #networkDown
 #   #networkUp
