@@ -1,7 +1,7 @@
 #将生成的创始块和通道文件存储在该目录中
 channelArtifactsDir=../channel-artifacts
 channelName=qbgoochannel
-FABRIC_CFG_PATH=$(pwd)/../
+FABRIC_CFG_PATH=/home/yangqinjiang/myfabric
 echo "FABRIC_CFG_PATH="
 echo FABRIC_CFG_PATH
 
