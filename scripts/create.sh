@@ -6,17 +6,17 @@ channelName=qbgoochannel
 # 将生成的创始块和通道文件存储在该目录中
 mkdir $channelArtifactsDir
 # 生成创始块文件
-configtxgen -profile OrgsOrdererGenesis -outputBlock ./$channelArtifactsDir/genesis.block
+configtxgen --configPath=../configtx.yaml -profile OrgsOrdererGenesis -outputBlock ./$channelArtifactsDir/genesis.block
 
 
 # 创建channel
 # channel.tx中包含了用于生产channel的信息
-configtxgen -profile OrgsChannel -outputCreateChannelTx ./$channelArtifactsDir/channel.tx -channelID $channelName
+configtxgen --configPath=../configtx.yaml -profile OrgsChannel -outputCreateChannelTx ./$channelArtifactsDir/channel.tx -channelID $channelName
 
 # 生成相关的锚点文件 - 组织A
-configtxgen -profile OrgsChannel -outputAnchorPeersUpdate ./$channelArtifactsDir/OrgAMSPanchors.tx -channelID $channelName -asOrg OrgAMSP
+configtxgen --configPath=../configtx.yaml -profile OrgsChannel -outputAnchorPeersUpdate ./$channelArtifactsDir/OrgAMSPanchors.tx -channelID $channelName -asOrg OrgAMSP
 # 生成相关的锚点文件 - 组织B
-configtxgen -profile OrgsChannel -outputAnchorPeersUpdate ./$channelArtifactsDir/OrgBMSPanchors.tx -channelID $channelName -asOrg OrgBMSP
+configtxgen --configPath=../configtx.yaml -profile OrgsChannel -outputAnchorPeersUpdate ./$channelArtifactsDir/OrgBMSPanchors.tx -channelID $channelName -asOrg OrgBMSP
 #查看$channelArtifactsDir目录下生成的文件
 tree $channelArtifactsDir/
 
