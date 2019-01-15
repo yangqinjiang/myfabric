@@ -143,13 +143,13 @@ networkUp(){
         echo "ERROR !!!! Unable to start network,docker-compose ERROR"
         exit 1
     fi
-    # 运行cli容器内的脚本
-    # now run the end to end script
-    docker exec cli scripts/script.sh $CHANNEL_NAME $CLI_DELAY $LANGUAGE $CLI_TIMEOUT $VERBOSE
-    if [ $? -ne 0 ]; then
-      echo "ERROR !!!! Test failed"
-      exit 1
-    fi
+    ## 运行cli容器内的脚本
+    ## now run the end to end script
+    #docker exec cli scripts/script.sh $CHANNEL_NAME $CLI_DELAY $LANGUAGE $CLI_TIMEOUT $VERBOSE
+    #if [ $? -ne 0 ]; then
+    #  echo "ERROR !!!! Test failed"
+    #  exit 1
+    #fi
 }
 
 #停止
