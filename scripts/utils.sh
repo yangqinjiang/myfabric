@@ -33,7 +33,7 @@ setGlobals() {
   PEER=$1
   ORG=$2
   # 组织A的配置
-  if [ $ORG -eq 1 ]; then
+  if [ $ORG -eq 'A' ]; then
     CORE_PEER_LOCALMSPID="OrgAMSP" #组织A的ID
     CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORGA_CA # 组织A的peer0节点的证书
     #当前节点的msp文件路径
@@ -43,7 +43,7 @@ setGlobals() {
     else
       CORE_PEER_ADDRESS=peer1.orga.qbgoo.com:7051 #组织A的peer1
     fi
-  elif [ $ORG -eq 2 ]; then
+  elif [ $ORG -eq 'B' ]; then
     CORE_PEER_LOCALMSPID="OrgBMSP"#组织B的ID
     CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORGB_CA # 组织B的peer0节点的证书
     #当前节点的msp文件路径

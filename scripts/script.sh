@@ -30,7 +30,7 @@ echo "Channel name : "$CHANNEL_NAME
 . scripts/utils.sh
 
 createChannel() {
-	setGlobals 0 1
+	setGlobals 0 'A'
 
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
                 set -x
@@ -52,7 +52,7 @@ createChannel() {
 # 加入通道
 joinChannel () {
 	# 遍历加入通道
-	for org in 1 2; do
+	for org in 'A' 'B'; do
 	    for peer in 0 1; do
 		joinChannelWithRetry $peer $org
 		echo "===================== peer${peer}.org${org} joined channel '$CHANNEL_NAME' ===================== "
