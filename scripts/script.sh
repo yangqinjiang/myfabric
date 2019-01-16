@@ -32,19 +32,20 @@ echo "Channel name : "$CHANNEL_NAME
 createChannel() {
 	setGlobals 0 'A'
 
+	# 是否开启TLS
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
-                set -x
-		peer channel create -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/qbgoochannel_channel.tx >&log.txt
+        set -x
+		peer channel create -o orderer.qbgoo.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/qbgoochannel_channel.tx >&log.txt
 		res=$?
-                set +x
+        set +x
 	else
-				set -x
-		peer channel create -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/qbgoochannel_channel.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt
+		set -x
+		peer channel create -o orderer.qbgoo.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/qbgoochannel_channel.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt
 		res=$?
-				set +x
+		set +x
 	fi
 	cat log.txt
-	verifyResult $res "Channel creation failed"
+	verifyResult $res "Channel creation failed" #检查命令的执行结果
 	echo "===================== Channel '$CHANNEL_NAME' created ===================== "
 	echo
 }
