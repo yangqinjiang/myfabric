@@ -32,15 +32,16 @@ setOrdererGlobals() {
 setGlobals() {
   PEER=$1
   ORG=$2
+  # 组织A的配置
   if [ $ORG -eq 1 ]; then
     CORE_PEER_LOCALMSPID="OrgAMSP" #组织A的ID
     CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORGA_CA # 组织A的peer0节点的证书
     #当前节点的msp文件路径
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/orga.qbgoo.com/users/Admin@orga.qbgoo.com/msp
     if [ $PEER -eq 0 ]; then
-      CORE_PEER_ADDRESS=peer0.org1.qbgoo.com:7051
+      CORE_PEER_ADDRESS=peer0.orga.qbgoo.com:7051 #组织A的peer0
     else
-      CORE_PEER_ADDRESS=peer1.org1.qbgoo.com:7051
+      CORE_PEER_ADDRESS=peer1.orga.qbgoo.com:7051 #组织A的peer1
     fi
   elif [ $ORG -eq 2 ]; then
     CORE_PEER_LOCALMSPID="OrgBMSP"#组织B的ID
@@ -48,9 +49,9 @@ setGlobals() {
     #当前节点的msp文件路径
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/orgb.qbgoo.com/users/Admin@orgb.qbgoo.com/msp
     if [ $PEER -eq 0 ]; then
-      CORE_PEER_ADDRESS=peer0.org2.qbgoo.com:7051
+      CORE_PEER_ADDRESS=peer0.org2.qbgoo.com:7051 #组织B的peer0
     else
-      CORE_PEER_ADDRESS=peer1.org2.qbgoo.com:7051
+      CORE_PEER_ADDRESS=peer1.org2.qbgoo.com:7051 #组织B的peer1
     fi
   else
     echo "================== ERROR !!! ORG Unknown =================="
