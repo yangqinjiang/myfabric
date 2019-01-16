@@ -1,0 +1,1 @@
+# 链代码的目录, 将会映像到容器内 /opt/gopath/src/github.com/chaincode
