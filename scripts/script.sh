@@ -49,7 +49,9 @@ createChannel() {
 	echo
 }
 
+# 加入通道
 joinChannel () {
+	# 遍历加入通道
 	for org in 1 2; do
 	    for peer in 0 1; do
 		joinChannelWithRetry $peer $org
